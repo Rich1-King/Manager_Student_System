@@ -133,7 +133,7 @@ public class InformationAction{
 
     public String saveInf() throws UnsupportedEncodingException
     {
-
+        System.out.println("tijoa");
         HibernateControl hibernateControl = HibernateControl.getInstance();
         Session session = hibernateControl.getSession();
         InformationModel model = (InformationModel)session.get
