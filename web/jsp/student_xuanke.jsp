@@ -147,24 +147,27 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
     <script type="text/javascript">
         var num = -1;
+        var page = 1;
         $(document).ready(function()
                  {
                    $.post("CourseAction"
                            , null
                            ,function(data,statusText)
                            {
-
                                for(var i = 0; i < data.id.length; i++)
                                {
-                                   $("#tableHeader").after("<tr><td>"
-                                           +data["id"][data.id.length-i-1]+"</td>" +
-                                           "<td>"+data["course"][data.id.length-i-1]+"</td>" +
-                                           "<td>"+data["classroom"][data.id.length-i-1]+"</td>" +
-                                           "<td>"+data["time"][data.id.length-i-1]+"</td>" +
-                                           "<td>"+data["teacher"][data.id.length-i-1]+"</td>" +
-                                           "<td>" +
-                                           "<input class=\"input\" id=\"input"+(data.id.length-i-1)+"\" type=\"checkbox\" disabled=\"true\"/>选课" +
-                                           "</td></tr>");
+                                   if((Math.floor(i/12) +1) == page)
+                                   {
+                                       $("#tableHeader").after("<tr><td>"
+                                               + data["id"][data.id.length - i - 1] + "</td>" +
+                                               "<td>" + data["course"][data.id.length - i - 1] + "</td>" +
+                                               "<td>" + data["classroom"][data.id.length - i - 1] + "</td>" +
+                                               "<td>" + data["time"][data.id.length - i - 1] + "</td>" +
+                                               "<td>" + data["teacher"][data.id.length - i - 1] + "</td>" +
+                                               "<td>" +
+                                               "<input class=\"input\" id=\"input" + (data.id.length - i - 1) + "\" type=\"checkbox\" disabled=\"true\"/>选课" +
+                                               "</td></tr>");
+                                   }
                                }
                                num = data.id.length;
 
@@ -215,6 +218,7 @@
                         },"json");
 
         }
+
         function editClick()
         {
             for(var i=0; i<num; i++)
@@ -222,7 +226,6 @@
                 $("#input" + i).attr("disabled", false);
             }
         }
-
     </script>
 </head>
 <body>
@@ -249,21 +252,8 @@
                 <th class="other">任课老师</th>
                 <th class="other" id="select"></th>
             </tr>
-            <%
-                /*for(int i=0; i<12; i++){
-                    out.println("<tr>");
-                    out.println("<td class='test' id='num" + i + "'></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td><input id=\"input\" type=\"checkbox\"/>选课</td>");
-                    out.println("</tr>");
-                }*/
-            %>
         </table>
         <div id="downtip">
-
         </div>
     </div>
 </body>

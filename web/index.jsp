@@ -15,9 +15,6 @@
         <script type="text/javascript">
             function login()
             {
-                //var form = document.getElementById("formValue");
-                //form.action = "loginAction";
-                //form.submit();
                 $.post("loginAction",
                         {
                             studentId:$("#studentId").val(),

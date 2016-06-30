@@ -2,8 +2,11 @@ package com.homework.action;
 
 import com.database.HibernateControl;
 import com.homework.model.InformationModel;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -96,21 +99,13 @@ public class InformationAction{
 
 
     public String execute() throws ClassNotFoundException{
-      /*  Configuration conf = new Configuration().configure();
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-                .applySettings(conf.getProperties()).buildServiceRegistry();
-
-        SessionFactory sf = conf.buildSessionFactory(serviceRegistry);
-
-        Session sess = sf.openSession();
-
-        Transaction tx = sess.beginTransaction();
-        */
         HibernateControl hibernateControl = HibernateControl.getInstance();
         Session sess = hibernateControl.getSession();
-
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpSession session = request.getSession();
         List users = sess.createQuery("select model from " +
-                "InformationModel model")
+                "InformationModel model where studentId = " + session
+                .getAttribute("studentId"))
                 .list();
         hibernateControl.execute();
         hibernateControl.close();
@@ -127,7 +122,6 @@ public class InformationAction{
             setPhone(user.getPhone());
             setStudentId(user.getStudentId());
         }
-
         return SUCCESS;
     }
 
